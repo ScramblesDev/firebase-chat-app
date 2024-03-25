@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:chatapptute/functions.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -17,10 +18,10 @@ class _HomePageState extends State<HomePage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   //sign user out
-  void signOut() {
+  void signOut() async {
     //get auth service
-    final authService = Provider.of<AuthService>(context, listen: false);
-    authService.signOut();
+    final functions = Functions();
+    await functions.signOutUser();
   }
 
   @override

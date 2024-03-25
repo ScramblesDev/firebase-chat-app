@@ -3,6 +3,7 @@ import 'package:chatapptute/components/my_text_field.dart';
 import 'package:chatapptute/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:chatapptute/functions.dart';
 
 class LoginPage extends StatefulWidget {
   final void Function()? onTap;
@@ -19,12 +20,13 @@ class _LoginPageState extends State<LoginPage> {
 
   //sign in user
   void signIn() async {
+    final functions = Functions();
+
     //get the auth service
     final authService = Provider.of<AuthService>(context, listen: false);
 
     try {
-      await authService.signInWithEmailandPassword(
-          emailController.text, passwordController.text);
+      await functions.signInUser(emailController.text, passwordController.text);
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

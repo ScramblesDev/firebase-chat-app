@@ -6,6 +6,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:chatapptute/functions.dart';
+
+final Functions functions = Functions();
 
 class ChatPage extends StatefulWidget {
   final String receiverUserEmail;
@@ -28,9 +31,8 @@ class _ChatPageState extends State<ChatPage> {
   void sendMessage() async {
     //only send the message if there is something to send
     if (_messageController.text.isNotEmpty) {
-      await _chatService.sendMessage(
+      await functions.sendMessage(
           widget.receiverUserID, _messageController.text);
-      //clear the text controller after sending the message
       _messageController.clear();
     }
   }
@@ -58,7 +60,7 @@ class _ChatPageState extends State<ChatPage> {
   //build message list
   Widget _buildMessageList() {
     return StreamBuilder(
-        stream: _chatService.getMessages(
+        stream: functions.getMessages(
             widget.receiverUserID, _firebaseAuth.currentUser!.uid),
         builder: (context, snapshot) {
           if (snapshot.hasError) {

@@ -3,6 +3,7 @@ import 'package:chatapptute/components/my_text_field.dart';
 import 'package:chatapptute/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:chatapptute/functions.dart';
 
 class RegisterPage extends StatefulWidget {
   final void Function()? onTap;
@@ -23,19 +24,18 @@ class _RegisterPageState extends State<RegisterPage> {
     if (passwordController.text != confirmPasswordController.text) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text("Password do not match!"),
+          content: Text("Passwords do not match!"),
         ),
       );
       return;
     }
 
+    final functions = Functions();
     //get auth service
-    final authService = Provider.of<AuthService>(context, listen: false);
     try {
-      await authService.signUpWithEmailandPassword(
-        emailController.text,
-        passwordController.text,
-      );
+      await functions.registerUser(
+          emailController.text, passwordController.text);
+      // Optionally, navigate to the home page or login page after successful registration
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
